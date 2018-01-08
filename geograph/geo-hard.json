@@ -1,0 +1,42 @@
+[
+  {
+    "id": 19,
+    "question": "Capital of Bangladesh = ?",
+    "answers": [
+      {
+        "answer": "Khulna"
+      },
+      {
+        "answer": "Comilla"
+      },
+      {
+        "answer": "Bogra"
+      },
+      {
+        "answer": "Daca"
+      }
+    ],
+    "correct": "Daca",
+    "pontuation": "100"
+  },
+  {
+    "id": 20,
+    "question": "Capital of Belize = ?",
+    "answers": [
+      {
+        "answer": "Belize City"
+      },
+      {
+        "answer": "San Pedro"
+      },
+      {
+        "answer": "City of Belize"
+      },
+      {
+        "answer": "Belmopan"
+      }
+    ],
+    "correct": "Belize City",
+    "pontuation": "100"
+  }
+]
