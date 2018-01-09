@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "969060893013",
+    "firebase_url": "https://teachlesson-da728.firebaseio.com",
+    "project_id": "teachlesson-da728",
+    "storage_bucket": "teachlesson-da728.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969060893013:android:a0682ba5e052cecc",
+        "android_client_info": {
+          "package_name": "com.example.android.teachlesson"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969060893013-33dqrkgvvt1jmketudtis5q13g6k5v1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.teachlesson",
+            "certificate_hash": "c25015b688edbbe3678de517ae214429ea13ff37"
+          }
+        },
+        {
+          "client_id": "969060893013-2l6r2ucibt8aknclttn1accot5s4u0k5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo_PYuB5i37FEwwbj0kFThfF60DUJCdoQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969060893013-2l6r2ucibt8aknclttn1accot5s4u0k5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
