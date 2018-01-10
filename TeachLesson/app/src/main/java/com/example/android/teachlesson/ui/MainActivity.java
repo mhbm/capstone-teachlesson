@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.example.android.teachlesson.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.common.SignInButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         clickListenerQuestion(GEOGRAPH, geoButton);
         clickListenerQuestion(HISTORY, historyButton);
 
+        // Set the dimensions of the sign-in button.
+        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
 
     }
 
