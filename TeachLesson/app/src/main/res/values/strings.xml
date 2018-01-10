@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TeachLesson</string>
     <string name="copyright">POWERED BY MATEUS MACEDO</string>
-    <string name="math">Math</string>
+    <string name="math">Mathematics</string>
     <string name="geograph">Geograph</string>
     <string name="history">History</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>

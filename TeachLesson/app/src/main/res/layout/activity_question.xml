@@ -84,7 +84,7 @@
         android:layout_marginEnd="8dp" />
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+        android:id="@+id/adView_question"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"
         android:layout_width="wrap_content"
