@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.android.teachlesson.MainActivity">
+    tools:context="com.example.android.teachlesson.ui.MainActivity">
 
 
     <TextView

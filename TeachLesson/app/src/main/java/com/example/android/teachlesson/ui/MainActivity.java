@@ -1,8 +1,9 @@
-package com.example.android.teachlesson;
+package com.example.android.teachlesson.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.android.teachlesson.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -11,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
 
     private AdView mAdView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
