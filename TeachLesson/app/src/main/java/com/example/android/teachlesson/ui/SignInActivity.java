@@ -78,6 +78,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 signInButton.setVisibility(View.GONE);
+                signOutButton.setVisibility(View.VISIBLE);
 
                 if (user != null) {
                     // User is signed in
@@ -87,13 +88,16 @@ public class SignInActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
 
 
-                    Intent in = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(in);
+                    if (test == false) {
+                        Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(in);
+                    }
 
 
                 } else {
                     // User is signed out
                     signInButton.setVisibility(View.VISIBLE);
+                    signOutButton.setVisibility(View.GONE);
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
                 // ...
