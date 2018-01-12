@@ -6,4 +6,7 @@
     <string name="history">History</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="sign_out">Logout</string>
+    <string name="welcome">Welcome to the TeachLesson®, for to start, you need to login with Google. Click in the below button</string>
+    <string name="no">No</string>
+    <string name="text_logout">Do you really want to quit the TechLesson® app?</string>
 </resources>

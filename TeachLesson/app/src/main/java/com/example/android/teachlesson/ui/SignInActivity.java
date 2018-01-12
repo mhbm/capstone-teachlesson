@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.teachlesson.R;
@@ -42,6 +43,8 @@ public class SignInActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private SignInButton signInButton;
     private Button signOutButton;
+    private Button returnButton;
+    private TextView mTvReturnMessage ;
     private boolean test;
 
     @Override
@@ -50,7 +53,8 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signin);
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signOutButton = (Button) findViewById(R.id.sign_out_button);
-
+        returnButton = (Button) findViewById(R.id.return_button);
+        mTvReturnMessage = (TextView) findViewById(R.id.tv_sign);
 
         test = getIntent().getBooleanExtra("signOut", false);
 
@@ -79,6 +83,8 @@ public class SignInActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 signInButton.setVisibility(View.GONE);
                 signOutButton.setVisibility(View.VISIBLE);
+                returnButton.setVisibility(View.VISIBLE);
+                mTvReturnMessage.setText(R.string.text_logout);
 
                 if (user != null) {
                     // User is signed in
@@ -98,6 +104,8 @@ public class SignInActivity extends AppCompatActivity {
                     // User is signed out
                     signInButton.setVisibility(View.VISIBLE);
                     signOutButton.setVisibility(View.GONE);
+                    returnButton.setVisibility(View.GONE);
+                    mTvReturnMessage.setText(R.string.welcome);
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
                 // ...
@@ -117,6 +125,14 @@ public class SignInActivity extends AppCompatActivity {
                 signOut();
             }
             // ..
+        });
+
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(in);
+            }
         });
 
 
