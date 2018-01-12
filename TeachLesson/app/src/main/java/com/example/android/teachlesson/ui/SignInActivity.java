@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.android.teachlesson.R;
@@ -34,12 +35,14 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class SignInActivity extends AppCompatActivity {
 
     private static final String TAG = "SignInActivity";
-    public static final String GOOGLEAPI = "mGoogleApiClient";
+
+
     private static final int RC_SIGN_IN = 0;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private SignInButton signInButton;
-    public static GoogleApiClient mGoogleApiClient;
+    private Button signOutButton;
+    public GoogleApiClient mGoogleApiClient;
 
 
 
@@ -48,8 +51,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-
-        System.out.println("kkkkkkkkkkkkkkkkkkkk");
+        signOutButton = (Button) findViewById(R.id.sign_out_button);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -101,22 +103,22 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-//        signOutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
-//                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-//                        new ResultCallback<Status>() {
-//                            @Override
-//                            public void onResult(Status status) {
-//                                signInButton.setVisibility(View.VISIBLE);
-//                                signOutButton.setVisibility(View.GONE);
-//
-//                            }
-//                        });
-//            }
-//            // ..
-//        });
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                        new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status status) {
+                                signInButton.setVisibility(View.VISIBLE);
+                                signOutButton.setVisibility(View.GONE);
+
+                            }
+                        });
+            }
+            // ..
+        });
 
 
     }
