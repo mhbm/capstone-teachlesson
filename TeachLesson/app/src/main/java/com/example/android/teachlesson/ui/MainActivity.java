@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                Intent in = new Intent(getApplicationContext(), SignInActivity.class);
                 in.putExtra("signOut", true);
                 startActivity(in);
 

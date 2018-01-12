@@ -2,7 +2,6 @@ package com.example.android.teachlesson.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -38,20 +37,23 @@ public class SignInActivity extends AppCompatActivity {
 
 
     private static final int RC_SIGN_IN = 0;
+    public GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private SignInButton signInButton;
     private Button signOutButton;
-    public GoogleApiClient mGoogleApiClient;
-
-
+    private boolean test;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signOutButton = (Button) findViewById(R.id.sign_out_button);
+
+
+        test = getIntent().getBooleanExtra("signOut", false);
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -69,6 +71,8 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
 
         mAuth = FirebaseAuth.getInstance();
+
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -82,7 +86,7 @@ public class SignInActivity extends AppCompatActivity {
                         Toast.makeText(getBaseContext(), user.getDisplayName().toString(),
                                 Toast.LENGTH_LONG).show();
 
-                    System.out.println("kkkkkkkkkkk");
+
                     Intent in = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(in);
 
@@ -106,16 +110,7 @@ public class SignInActivity extends AppCompatActivity {
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                signInButton.setVisibility(View.VISIBLE);
-                                signOutButton.setVisibility(View.GONE);
-
-                            }
-                        });
+                signOut();
             }
             // ..
         });
@@ -124,17 +119,16 @@ public class SignInActivity extends AppCompatActivity {
     }
 
 
-
-    public   void signOut() {
+    public void signOut() {
         FirebaseAuth.getInstance().signOut();
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                Intent in = new Intent(getApplicationContext(), SignInActivity.class);
-                                startActivity(in);
-                            }
-                        });
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        Intent in = new Intent(getApplicationContext(), SignInActivity.class);
+                        startActivity(in);
+                    }
+                });
     }
 
     private void signIn() {
@@ -162,21 +156,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        System.out.println("cccccccccccccc");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        System.out.println("aaaaaaaaaaaa");
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
-        System.out.println("bbbbbbbbb");
         mAuth.addAuthStateListener(mAuthListener);
     }
 
