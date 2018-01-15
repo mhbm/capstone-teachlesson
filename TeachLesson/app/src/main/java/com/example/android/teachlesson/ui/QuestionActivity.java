@@ -56,10 +56,85 @@ public class QuestionActivity extends AppCompatActivity {
 
         System.out.println(mDatabase.toString());
 
-     
-
+//        ArrayList<QuestionModel> questionQuizz = getInformationFirebase(material);
 
     }
 
+//    public ArrayList<QuestionModel> getInformationFirebase(String material) {
+//
+//        final ArrayList<QuestionModel> questionQuizz = new ArrayList();
+//        switch (material) {
+//            case "geograph":
+//
+//                mDatabase.child("/0/" + material).addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                        for (DataSnapshot questionDataSnapshot : dataSnapshot.getChildren()) {
+//
+//                            long value = questionDataSnapshot.getChildrenCount();
+//                            Log.d(TAG, "no of children: " + value);
+//
+//                            QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
+//                            System.out.println("aaaaaaaaaaaaaaaaaaaaa");
+//                            questionQuizz.add(questionModel);
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+//                break;
+//            case "mathematics":
+//                mDatabase.child("/1/" + material).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        int i = 0;
+//                        for (DataSnapshot questionDataSnapshot : dataSnapshot.getChildren()) {
+//                            System.out.println("testtttttttttttttttt");
+//                            long value = questionDataSnapshot.getChildrenCount();
+//                            Log.d(TAG, "no of children: " + value);
+//
+//                            GenericTypeIndicator<List<QuestionModel>> t = new GenericTypeIndicator<List<QuestionModel>>() {};
+//
+//                            List<QuestionModel> test = questionDataSnapshot.getValue(t);
+//
+//                            test.get(i).getPontuation();
+//                            i++;
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+//                break;
+//            default:
+//                System.out.println("errrrrrrrrrrrrro");
+//                mDatabase.child("/2/" + material).addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot questionDataSnapshot : dataSnapshot.getChildren()) {
+//                            long value = questionDataSnapshot.getChildrenCount();
+//                            Log.d(TAG, "no of children: " + value);
+//                            QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
+//                            questionQuizz.add(questionModel);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                    }
+//                });
+//                break;
+//        }
+//
+//        return questionQuizz;
+//    }
 
 }

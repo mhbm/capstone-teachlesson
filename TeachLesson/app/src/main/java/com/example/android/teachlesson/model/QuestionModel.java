@@ -1,6 +1,6 @@
 package com.example.android.teachlesson.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by lsitec101.macedo on 10/01/18.
@@ -10,7 +10,7 @@ public class QuestionModel {
 
     private int id;
     private String question;
-    private ArrayList<String> answers;
+    private HashMap<String,AnswerModel> answers;
     private String correct;
     private int pontuation;
 
@@ -19,13 +19,6 @@ public class QuestionModel {
     public QuestionModel() {
     }
 
-    public QuestionModel(int id, String question, ArrayList<String> answers, String correct, int pontuation) {
-        this.id = id;
-        this.question = question;
-        this.answers = answers;
-        this.correct = correct;
-        this.pontuation = pontuation;
-    }
 
     public int getId() {
         return id;
@@ -43,11 +36,11 @@ public class QuestionModel {
         this.question = question;
     }
 
-    public ArrayList<String> getAnswers() {
+    public HashMap<String,AnswerModel> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(ArrayList<String> answers) {
+    public void setAnswers(HashMap<String,AnswerModel> answers) {
         this.answers = answers;
     }
 
