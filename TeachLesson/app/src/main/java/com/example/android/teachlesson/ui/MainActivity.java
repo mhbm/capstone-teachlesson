@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private Button mSignOut;
 
 
-    public static final String MATHEMATICS = "Mathematics";
-    public static final String GEOGRAPH = "Geograph";
-    public static final String HISTORY = "History";
+    public static final String MATHEMATICS = "mathematics";
+    public static final String GEOGRAPH = "geograph";
+    public static final String HISTORY = "history";
     public static final String MATERIAL = "Material";
 
 
