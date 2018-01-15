@@ -1,6 +1,6 @@
 package com.example.android.teachlesson.model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Created by lsitec101.macedo on 10/01/18.
@@ -10,9 +10,9 @@ public class QuestionModel {
 
     private int id;
     private String question;
-    private HashMap<String,AnswerModel> answers;
+    private ArrayList<AnswerModel> answers;
     private String correct;
-    private int pontuation;
+    private String pontuation;
 
     // Default constructor required for calls to
     // DataSnapshot.getValue(User.class)
@@ -36,11 +36,11 @@ public class QuestionModel {
         this.question = question;
     }
 
-    public HashMap<String,AnswerModel> getAnswers() {
+    public ArrayList<AnswerModel> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(HashMap<String,AnswerModel> answers) {
+    public void setAnswers(ArrayList<AnswerModel> answers) {
         this.answers = answers;
     }
 
@@ -52,11 +52,11 @@ public class QuestionModel {
         this.correct = correct;
     }
 
-    public int getPontuation() {
+    public String getPontuation() {
         return pontuation;
     }
 
-    public void setPontuation(int pontuation) {
+    public void setPontuation(String pontuation) {
         this.pontuation = pontuation;
     }
 }
