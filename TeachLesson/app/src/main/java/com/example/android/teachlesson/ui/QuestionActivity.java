@@ -39,6 +39,7 @@ public class QuestionActivity extends AppCompatActivity {
     private Button mBtnAnswer4;
 
     private TextView mTvQuestion;
+    public static ArrayList<QuestionModel> questionQuiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,32 +61,33 @@ public class QuestionActivity extends AppCompatActivity {
         mBtnAnswer4 = (Button) findViewById(R.id.btn_answer4);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.keepSynced(true);
 
         System.out.println(mDatabase.toString());
 
-        ArrayList<QuestionModel> questionQuizz = getInformationFirebase(material);
+        questionQuiz = new ArrayList<>();
+
+        getInformationFirebase(material);
+
+
+        System.out.println("kkkkk");
+        System.out.println(questionQuiz.toString());
 
     }
 
-    public ArrayList<QuestionModel> getInformationFirebase(String material) {
 
-        final ArrayList<QuestionModel> questionQuizz = new ArrayList();
+    public void getInformationFirebase(String material) {
+
         switch (material) {
             case "geograph":
-
                 mDatabase.child("/0/" + material).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
                         for (DataSnapshot questionDataSnapshot : dataSnapshot.getChildren()) {
-
                             long value = questionDataSnapshot.getChildrenCount();
                             Log.d(TAG, "no of children: " + value);
                             QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
-
-                            System.out.println(questionModel.getQuestion());
-                            questionQuizz.add(questionModel);
-
+                            questionQuiz.add(questionModel);
                         }
                     }
 
@@ -99,47 +101,42 @@ public class QuestionActivity extends AppCompatActivity {
                 mDatabase.child("/1/" + material).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
                         for (DataSnapshot questionDataSnapshot : dataSnapshot.getChildren()) {
                             long value = questionDataSnapshot.getChildrenCount();
                             Log.d(TAG, "no of children: " + value);
                             QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
-
-                            System.out.println(questionModel.getQuestion());
-                            questionQuizz.add(questionModel);
-
+//                            System.out.println(questionModel.getQuestion());
+                            questionQuiz.add(questionModel);
                         }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
                 break;
             default:
-                System.out.println("errrrrrrrrrrrrro");
                 mDatabase.child("/2/" + material).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        int i = 0;
                         for (DataSnapshot questionDataSnapshot : dataSnapshot.getChildren()) {
                             long value = questionDataSnapshot.getChildrenCount();
                             Log.d(TAG, "no of children: " + value);
                             QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
+                            questionQuiz.add(questionModel);
 
-                            System.out.println(questionModel.getQuestion());
-                            questionQuizz.add(questionModel);
+                            System.out.println(questionQuiz.get(i).getQuestion());
+                            i++;
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
                 break;
         }
-
-        return questionQuizz;
     }
+
 
 }
