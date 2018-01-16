@@ -76,8 +76,8 @@ public class FinishActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         startActivity(new Intent(this, MainActivity.class));
         finish();
+        super.onBackPressed();
     }
 }
