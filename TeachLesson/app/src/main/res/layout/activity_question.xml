@@ -4,7 +4,6 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
@@ -18,13 +17,10 @@
         android:textAlignment="center"
         android:textSize="32sp"
         android:textColor="@color/colorText"
-        tool:layout_editor_absoluteY="67dp"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        tool:layout_editor_absoluteY="63dp"
+        ads:layout_constraintHorizontal_bias="0.0" />
 
 
     <Button

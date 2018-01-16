@@ -1,8 +1,10 @@
 package com.example.android.teachlesson.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,6 +29,8 @@ import static com.example.android.teachlesson.ui.MainActivity.MATERIAL;
 public class QuestionActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
+    public static final String USER_PONTUATION = "USER_PONTUATION";
+
 
     private AdView mAdView;
 
@@ -39,7 +43,10 @@ public class QuestionActivity extends AppCompatActivity {
     private Button mBtnAnswer4;
 
     private TextView mTvQuestion;
-    public static ArrayList<QuestionModel> questionQuiz;
+    private ArrayList<QuestionModel> questionQuiz;
+
+    private int userPontuation;
+    private int numberQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +67,18 @@ public class QuestionActivity extends AppCompatActivity {
         mBtnAnswer3 = (Button) findViewById(R.id.btn_answer3);
         mBtnAnswer4 = (Button) findViewById(R.id.btn_answer4);
 
+        mBtnAnswer1.setVisibility(View.INVISIBLE);
+        mBtnAnswer2.setVisibility(View.INVISIBLE);
+        mBtnAnswer3.setVisibility(View.INVISIBLE);
+        mBtnAnswer4.setVisibility(View.INVISIBLE);
+
+        makeFunctionButton(mBtnAnswer1);
+        makeFunctionButton(mBtnAnswer2);
+        makeFunctionButton(mBtnAnswer3);
+        makeFunctionButton(mBtnAnswer4);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.keepSynced(true);
+//        mDatabase.keepSynced(true);
 
         System.out.println(mDatabase.toString());
 
@@ -69,10 +86,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         getInformationFirebase(material);
 
-
-        System.out.println("kkkkk");
-        System.out.println(questionQuiz.toString());
-
+        //// initialze variable aux
+        userPontuation =  0;
+        numberQuestion = 0;
     }
 
 
@@ -89,6 +105,7 @@ public class QuestionActivity extends AppCompatActivity {
                             QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
                             questionQuiz.add(questionModel);
                         }
+                        updateUI();
                     }
 
                     @Override
@@ -107,7 +124,9 @@ public class QuestionActivity extends AppCompatActivity {
                             QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
 //                            System.out.println(questionModel.getQuestion());
                             questionQuiz.add(questionModel);
+                            System.out.println(questionQuiz.get(0).getPontuation());
                         }
+                        updateUI();
                     }
 
                     @Override
@@ -126,9 +145,10 @@ public class QuestionActivity extends AppCompatActivity {
                             QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
                             questionQuiz.add(questionModel);
 
-                            System.out.println(questionQuiz.get(i).getQuestion());
-                            i++;
+//                            System.out.println(questionQuiz.get(i).getQuestion());
+//                            i++;
                         }
+                        updateUI();
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -138,5 +158,52 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
+
+    public void updateUI() {
+        mTvQuestion.setText(questionQuiz.get(numberQuestion).getQuestion());
+
+        mBtnAnswer1.setText(questionQuiz.get(numberQuestion).getAnswers().get(0).getAnswer());
+        mBtnAnswer2.setText(questionQuiz.get(numberQuestion).getAnswers().get(1).getAnswer());
+        mBtnAnswer3.setText(questionQuiz.get(numberQuestion).getAnswers().get(2).getAnswer());
+        mBtnAnswer4.setText(questionQuiz.get(numberQuestion).getAnswers().get(3).getAnswer());
+
+        mBtnAnswer1.setVisibility(View.VISIBLE);
+        mBtnAnswer2.setVisibility(View.VISIBLE);
+        mBtnAnswer3.setVisibility(View.VISIBLE);
+        mBtnAnswer4.setVisibility(View.VISIBLE);
+
+    }
+
+    public void makeFunctionButton(final Button button) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answerTheQuestion(button);
+            }
+        });
+    }
+
+    public void answerTheQuestion(Button buttonClicked) {
+        if (buttonClicked.getText().equals(questionQuiz.get(numberQuestion).getCorrect())) {
+            userPontuation += Integer.valueOf(questionQuiz.get(numberQuestion).getPontuation());
+            System.out.println("pontuaaaaaaaaaaation  " + userPontuation  + "         " +questionQuiz.size());
+            if (numberQuestion == questionQuiz.size() -1) {
+//                System.out.println("FINISH your pontuation " + userPontuation);
+                endGame();
+            } else {
+                numberQuestion++;
+                updateUI();
+            }
+        } else {
+            endGame();
+        }
+    }
+
+    public void endGame() {
+        Intent intent = new Intent(this, FinishActivity.class);
+        intent.putExtra(USER_PONTUATION, userPontuation);
+        System.out.println("END GAME = PONTUATION " + userPontuation);
+        startActivity(intent);
+    }
 
 }

@@ -21,10 +21,9 @@
 
         <activity android:name=".ui.QuestionActivity" />
 
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".ui.MainActivity"/>
 
-
-            />
+        <activity android:name=".ui.FinishActivity"/>
     </application>
 
 </manifest>
