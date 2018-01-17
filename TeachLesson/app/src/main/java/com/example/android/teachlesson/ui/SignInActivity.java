@@ -44,7 +44,7 @@ public class SignInActivity extends AppCompatActivity {
     private SignInButton signInButton;
     private Button signOutButton;
     private Button returnButton;
-    private TextView mTvReturnMessage ;
+    private TextView mTvReturnMessage;
     private boolean test;
 
     @Override
@@ -89,10 +89,6 @@ public class SignInActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    if (user.getDisplayName() != null)
-                        Toast.makeText(getBaseContext(), user.getDisplayName().toString(),
-                                Toast.LENGTH_LONG).show();
-
 
                     if (test == false) {
                         Intent in = new Intent(getApplicationContext(), MainActivity.class);

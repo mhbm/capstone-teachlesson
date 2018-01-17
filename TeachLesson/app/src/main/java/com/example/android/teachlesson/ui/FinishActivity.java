@@ -1,10 +1,12 @@
 package com.example.android.teachlesson.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.teachlesson.R;
@@ -15,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import static com.example.android.teachlesson.ui.MainActivity.GEOGRAPH;
 import static com.example.android.teachlesson.ui.MainActivity.HISTORY;
@@ -36,11 +39,13 @@ public class FinishActivity extends AppCompatActivity {
 
     private TextView mTvPontuationText;
     private TextView mTvUserPontuation;
+    private ImageView mImagePhotoUser;
 
     private FirebaseUser userFirebase;
 
     private DatabaseReference mDatabase;
 
+    private Uri photoUriUser;
     private String uidUser;
 
     private String material;
@@ -56,6 +61,7 @@ public class FinishActivity extends AppCompatActivity {
 
         mTvPontuationText = (TextView) findViewById(R.id.tv_pontuation);
         mTvUserPontuation = (TextView) findViewById(R.id.tv_userPontuation);
+        mImagePhotoUser = (ImageView) findViewById(R.id.iv_photoUser);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -67,6 +73,7 @@ public class FinishActivity extends AppCompatActivity {
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getToken() instead.
             uidUser = userFirebase.getUid();
+            photoUriUser = userFirebase.getPhotoUrl();
         }
 
         updateUI();
@@ -76,6 +83,7 @@ public class FinishActivity extends AppCompatActivity {
     public void updateUI() {
         mTvPontuationText.setText(R.string.finisH_pontuation);
         mTvUserPontuation.setText(String.valueOf(userPontuation));
+        Picasso.with(getBaseContext()).load(photoUriUser.toString()).into(mImagePhotoUser);
     }
 
 
