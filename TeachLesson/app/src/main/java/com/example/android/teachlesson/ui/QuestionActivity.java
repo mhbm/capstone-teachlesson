@@ -20,6 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.example.android.teachlesson.ui.MainActivity.MATERIAL;
 
 /**
@@ -37,12 +40,13 @@ public class QuestionActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private DatabaseReference mQuestionReference;
 
-    private Button mBtnAnswer1;
-    private Button mBtnAnswer2;
-    private Button mBtnAnswer3;
-    private Button mBtnAnswer4;
 
-    private TextView mTvQuestion;
+    @BindView(R.id.btn_answer1) Button mBtnAnswer1;
+    @BindView(R.id.btn_answer2) Button mBtnAnswer2;
+    @BindView(R.id.btn_answer3) Button mBtnAnswer3;
+    @BindView(R.id.btn_answer4) Button mBtnAnswer4;
+
+    @BindView(R.id.tv_question) TextView mTvQuestion;
     private ArrayList<QuestionModel> questionQuiz;
 
     private int userPontuation;
@@ -63,13 +67,7 @@ public class QuestionActivity extends AppCompatActivity {
         material = bundle.getString(MATERIAL);
 
 
-
-        mTvQuestion = (TextView) findViewById(R.id.tv_question);
-
-        mBtnAnswer1 = (Button) findViewById(R.id.btn_answer1);
-        mBtnAnswer2 = (Button) findViewById(R.id.btn_answer2);
-        mBtnAnswer3 = (Button) findViewById(R.id.btn_answer3);
-        mBtnAnswer4 = (Button) findViewById(R.id.btn_answer4);
+        ButterKnife.bind(this);
 
         mBtnAnswer1.setVisibility(View.INVISIBLE);
         mBtnAnswer2.setVisibility(View.INVISIBLE);

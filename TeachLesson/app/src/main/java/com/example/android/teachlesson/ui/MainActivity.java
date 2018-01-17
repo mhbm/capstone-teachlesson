@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
 
     /// BUTTON FOR THE QUESTION
-    private Button mathButton;
-    private Button geoButton;
-    private Button historyButton;
-    private Button mSignOut;
+    @BindView(R.id.bt_math) Button mathButton;
+    @BindView(R.id.bt_geograph) Button geoButton;
+    @BindView(R.id.bt_history) Button historyButton;
+    @BindView(R.id.sign_out_button) Button mSignOut;
+
+
 
 
     public static final String MATHEMATICS = "mathematics";
@@ -62,10 +66,7 @@ public class MainActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        mathButton = (Button) findViewById(R.id.bt_math);
-        geoButton = (Button) findViewById(R.id.bt_geograph);
-        historyButton = (Button) findViewById(R.id.bt_history);
-        mSignOut = (Button) findViewById(R.id.sign_out_button);
+        ButterKnife.bind(this);
 
         clickListenerQuestion(MATHEMATICS, mathButton);
         clickListenerQuestion(GEOGRAPH, geoButton);
