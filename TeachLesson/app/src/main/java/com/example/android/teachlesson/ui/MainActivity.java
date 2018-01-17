@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import timber.log.Timber;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
             // ..
         });
 
+        Timber.plant(new Timber.DebugTree());
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         userFirebase = FirebaseAuth.getInstance().getCurrentUser();
@@ -105,12 +109,13 @@ public class MainActivity extends AppCompatActivity {
                         mDatabase.child("users").child(uidUser).child(PONTUATION_MATHEMATICS).setValue(String.valueOf(0));
                         mDatabase.child("users").child(uidUser).child(PONTUATION_HISTORY).setValue(String.valueOf(0));
                         mDatabase.child("users").child(uidUser).child(PONTUATION_GEOGRAPH).setValue(String.valueOf(0));
+                        Timber.d("Create a new user in firebase");
                     }
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
+                    Timber.d("Problem with the firebase");
                 }
             });
 
@@ -126,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Timber.d("Mathematics choose");
                         Bundle bundle = new Bundle();
                         bundle.putString(MATERIAL, MATHEMATICS);
                         Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
@@ -138,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Timber.d("Geograph choose");
                         Bundle bundle = new Bundle();
                         bundle.putString(MATERIAL, GEOGRAPH);
                         Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
@@ -151,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Timber.d("History choose");
                         Bundle bundle = new Bundle();
                         bundle.putString(MATERIAL, HISTORY);
                         Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);

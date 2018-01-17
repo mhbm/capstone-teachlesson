@@ -22,6 +22,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+
 import static com.example.android.teachlesson.ui.MainActivity.GEOGRAPH;
 import static com.example.android.teachlesson.ui.MainActivity.HISTORY;
 import static com.example.android.teachlesson.ui.MainActivity.MATERIAL;
@@ -60,6 +62,8 @@ public class FinishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish);
 
+        Timber.plant(new Timber.DebugTree());
+
         userPontuation = getIntent().getIntExtra(USER_PONTUATION, 0);
         material = getIntent().getStringExtra(MATERIAL);
 
@@ -79,6 +83,7 @@ public class FinishActivity extends AppCompatActivity {
             uidUser = userFirebase.getUid();
             photoUriUser = userFirebase.getPhotoUrl();
             userName = userFirebase.getDisplayName();
+            Timber.d("Get user information");
         }
 
         updateUI();
@@ -89,6 +94,7 @@ public class FinishActivity extends AppCompatActivity {
         mTvPontuationText.setText(R.string.finisH_pontuation);
         mTvUserPontuation.setText(String.valueOf(userPontuation));
         Picasso.with(getBaseContext()).load(photoUriUser.toString()).into(mImagePhotoUser);
+        Timber.d("Update the Finish UI");
     }
 
 
@@ -105,6 +111,8 @@ public class FinishActivity extends AppCompatActivity {
 
         /* Send that text to our method that will share it. */
         shareText(pontuation);
+
+        Timber.d("Pontuation was shared");
     }
 
 
@@ -183,6 +191,8 @@ public class FinishActivity extends AppCompatActivity {
         pontuationListString.add(PONTUATION_GEOGRAPH + " " + geographPontuation + "\n");
 
         UpdateServiceWidget.startWidgetService(pontuationListString, getBaseContext());
+
+        Timber.d("Pontuation was insered into Widget");
     }
 
 
