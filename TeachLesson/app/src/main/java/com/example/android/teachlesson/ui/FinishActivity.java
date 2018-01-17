@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.teachlesson.R;
+import com.example.android.teachlesson.widget.UpdateServiceWidget;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import static com.example.android.teachlesson.ui.MainActivity.GEOGRAPH;
 import static com.example.android.teachlesson.ui.MainActivity.HISTORY;
@@ -47,6 +50,7 @@ public class FinishActivity extends AppCompatActivity {
 
     private Uri photoUriUser;
     private String uidUser;
+    private String userName;
 
     private String material;
 
@@ -74,6 +78,7 @@ public class FinishActivity extends AppCompatActivity {
             // FirebaseUser.getToken() instead.
             uidUser = userFirebase.getUid();
             photoUriUser = userFirebase.getPhotoUrl();
+            userName = userFirebase.getDisplayName();
         }
 
         updateUI();
@@ -151,6 +156,7 @@ public class FinishActivity extends AppCompatActivity {
                                 mDatabase.child("users").child(uidUser).child(PONTUATION_GEOGRAPH).setValue(String.valueOf(userPontuation));
                             break;
                     }
+                    putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
                 }
             }
 
@@ -160,6 +166,20 @@ public class FinishActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void putPontuationIntoWidget(String mathPontuation, String historyPontuation, String geographPontuation, String userName) {
+
+        ArrayList<String> pontuationListString = new ArrayList<>();
+
+        pontuationListString.add("YOUR PONTUATION \n\n" + userName + "\n\n");
+
+
+        pontuationListString.add(PONTUATION_MATHEMATICS + " " + mathPontuation + "\n");
+        pontuationListString.add(PONTUATION_HISTORY + " " + historyPontuation + "\n");
+        pontuationListString.add(PONTUATION_GEOGRAPH + " " + geographPontuation + "\n");
+
+        UpdateServiceWidget.startWidgetService(pontuationListString, getBaseContext());
     }
 
 
