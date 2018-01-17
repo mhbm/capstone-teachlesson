@@ -112,7 +112,7 @@ public class FinishActivity extends AppCompatActivity {
 
         String mimeType = "text/plain";
 
-        String title = "Pontuation of TeachLesson®";
+        String title = getString(R.string.titleSharePontuation);
 
         ShareCompat.IntentBuilder
                 .from(this)
