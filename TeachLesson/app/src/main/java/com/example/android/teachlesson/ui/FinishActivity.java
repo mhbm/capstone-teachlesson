@@ -1,7 +1,6 @@
 package com.example.android.teachlesson.ui;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +10,19 @@ import android.widget.TextView;
 import com.example.android.teachlesson.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import static com.example.android.teachlesson.ui.MainActivity.GEOGRAPH;
+import static com.example.android.teachlesson.ui.MainActivity.HISTORY;
+import static com.example.android.teachlesson.ui.MainActivity.MATERIAL;
+import static com.example.android.teachlesson.ui.MainActivity.MATHEMATICS;
+import static com.example.android.teachlesson.ui.MainActivity.PONTUATION_GEOGRAPH;
+import static com.example.android.teachlesson.ui.MainActivity.PONTUATION_HISTORY;
+import static com.example.android.teachlesson.ui.MainActivity.PONTUATION_MATHEMATICS;
 import static com.example.android.teachlesson.ui.QuestionActivity.USER_PONTUATION;
 
 /**
@@ -32,10 +41,9 @@ public class FinishActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
 
-    private String nameUser;
-    private String emailUser;
-    private Uri photoUriUser;
     private String uidUser;
+
+    private String material;
 
 
     @Override
@@ -44,6 +52,7 @@ public class FinishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_finish);
 
         userPontuation = getIntent().getIntExtra(USER_PONTUATION, 0);
+        material = getIntent().getStringExtra(MATERIAL);
 
         mTvPontuationText = (TextView) findViewById(R.id.tv_pontuation);
         mTvUserPontuation = (TextView) findViewById(R.id.tv_userPontuation);
@@ -53,21 +62,11 @@ public class FinishActivity extends AppCompatActivity {
         userFirebase = FirebaseAuth.getInstance().getCurrentUser();
 
         if (userFirebase != null) {
-            nameUser = userFirebase.getDisplayName();
-            emailUser = userFirebase.getEmail();
-            photoUriUser = userFirebase.getPhotoUrl();
 
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getToken() instead.
             uidUser = userFirebase.getUid();
-
-            System.out.println("PARABENS USUARIO :");
-            System.out.println(nameUser);
-            System.out.println(emailUser);
-            System.out.println(uidUser);
-
-
         }
 
         updateUI();
@@ -126,14 +125,34 @@ public class FinishActivity extends AppCompatActivity {
      */
     public void onClickSavePontuation(View v) {
 
-        String pontuation =
-                mTvPontuationText.getText() + " " + userPontuation;
+        mDatabase.child("users").child(uidUser).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    switch (material) {
+                        case MATHEMATICS:
+                            if (Integer.parseInt(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue())) < userPontuation)
+                                mDatabase.child("users").child(uidUser).child(PONTUATION_MATHEMATICS).setValue(String.valueOf(userPontuation));
+                            break;
+                        case HISTORY:
+                            if (Integer.parseInt(String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue())) < userPontuation)
+                                mDatabase.child("users").child(uidUser).child(PONTUATION_HISTORY).setValue(String.valueOf(userPontuation));
+                            break;
+                        case GEOGRAPH:
+                            if (Integer.parseInt(String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue())) < userPontuation)
+                                mDatabase.child("users").child(uidUser).child(PONTUATION_GEOGRAPH).setValue(String.valueOf(userPontuation));
+                            break;
+                    }
+                }
+            }
 
-        mDatabase.child("users").child(uidUser).child("name").setValue(nameUser);
-        mDatabase.child("users").child(uidUser).child("email").setValue(emailUser);
-        mDatabase.child("users").child(uidUser).child("photo").setValue(photoUriUser.toString());
-        mDatabase.child("users").child(uidUser).child("pontuation").setValue(String.valueOf(userPontuation));
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        System.out.println("alll");
+            }
+        });
+
     }
+
+
 }

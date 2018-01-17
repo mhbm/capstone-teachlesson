@@ -48,6 +48,8 @@ public class QuestionActivity extends AppCompatActivity {
     private int userPontuation;
     private int numberQuestion;
 
+    private String material;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         ///GET THE MATERIAL CHOOSE
         Bundle bundle = getIntent().getExtras();
-        String material = bundle.getString(MATERIAL);
+        material = bundle.getString(MATERIAL);
+
+
 
         mTvQuestion = (TextView) findViewById(R.id.tv_question);
 
@@ -202,6 +206,7 @@ public class QuestionActivity extends AppCompatActivity {
     public void endGame() {
         Intent intent = new Intent(this, FinishActivity.class);
         intent.putExtra(USER_PONTUATION, userPontuation);
+        intent.putExtra(MATERIAL, material);
         System.out.println("END GAME = PONTUATION " + userPontuation);
         startActivity(intent);
     }

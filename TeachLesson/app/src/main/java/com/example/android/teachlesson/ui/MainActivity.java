@@ -1,6 +1,7 @@
 package com.example.android.teachlesson.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,13 @@ import android.widget.Button;
 import com.example.android.teachlesson.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +35,20 @@ public class MainActivity extends AppCompatActivity {
     public static final String GEOGRAPH = "geograph";
     public static final String HISTORY = "history";
     public static final String MATERIAL = "Material";
+
+    public static final String PONTUATION_MATHEMATICS = "pontuationMathematics";
+    public static final String PONTUATION_HISTORY = "pontuationHistory";
+    public static final String PONTUATION_GEOGRAPH = "pontuationGeograph";
+
+
+    private FirebaseUser userFirebase;
+
+    private DatabaseReference mDatabase;
+
+    private String nameUser;
+    private String emailUser;
+    private Uri photoUriUser;
+    private String uidUser;
 
 
 
@@ -57,6 +79,43 @@ public class MainActivity extends AppCompatActivity {
             }
             // ..
         });
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        userFirebase = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (userFirebase != null) {
+            nameUser = userFirebase.getDisplayName();
+            emailUser = userFirebase.getEmail();
+            photoUriUser = userFirebase.getPhotoUrl();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getToken() instead.
+            uidUser = userFirebase.getUid();
+
+            mDatabase.child("users").child(uidUser).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        System.out.println("not exist user in firebase");
+                        mDatabase.child("users").child(uidUser).child("name").setValue(nameUser);
+                        mDatabase.child("users").child(uidUser).child("email").setValue(emailUser);
+                        mDatabase.child("users").child(uidUser).child("photo").setValue(photoUriUser.toString());
+                        mDatabase.child("users").child(uidUser).child(PONTUATION_MATHEMATICS).setValue(String.valueOf(0));
+                        mDatabase.child("users").child(uidUser).child(PONTUATION_HISTORY).setValue(String.valueOf(0));
+                        mDatabase.child("users").child(uidUser).child(PONTUATION_GEOGRAPH).setValue(String.valueOf(0));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
 
     }
 
