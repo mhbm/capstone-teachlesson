@@ -146,17 +146,20 @@ public class FinishActivity extends AppCompatActivity {
                         case MATHEMATICS:
                             if (Integer.parseInt(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue())) < userPontuation)
                                 mDatabase.child("users").child(uidUser).child(PONTUATION_MATHEMATICS).setValue(String.valueOf(userPontuation));
+                            putPontuationIntoWidget(String.valueOf(userPontuation), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
                             break;
                         case HISTORY:
                             if (Integer.parseInt(String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue())) < userPontuation)
                                 mDatabase.child("users").child(uidUser).child(PONTUATION_HISTORY).setValue(String.valueOf(userPontuation));
+                            putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(userPontuation), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
                             break;
                         case GEOGRAPH:
                             if (Integer.parseInt(String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue())) < userPontuation)
                                 mDatabase.child("users").child(uidUser).child(PONTUATION_GEOGRAPH).setValue(String.valueOf(userPontuation));
+                            putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(userPontuation), userName);
                             break;
                     }
-                    putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
+//                    putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
                 }
             }
 
