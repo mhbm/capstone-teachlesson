@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'udacity'
+            keyPassword 'password'
+            storeFile file('/home/lsitec101.macedo/Projetos/Udacity/Capstone/TeachLesson/keystore.jks')
+            storePassword 'password'
+        }
+    }
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
@@ -16,6 +24,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
@@ -35,13 +44,10 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:10.0.1'
     compile 'com.google.firebase:firebase-storage:10.0.1'
     testCompile 'junit:junit:4.12'
-
     //PICASSO
     compile 'com.squareup.picasso:picasso:2.5.2'
-
     //Timber
     compile 'com.jakewharton.timber:timber:4.5.1'
-
     //Butterknife
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
