@@ -29,4 +29,9 @@
     <string name="yourPontuation">YOUR PONTUATION</string>
     <string name="mimeType">text/plain</string>
     <string name="users">users</string>
+    <string name="chooseHistory">History choose</string>
+    <string name="chooseGeograph">Geograph choose</string>
+    <string name="chooseMathematics">Mathematics choose</string>
+    <string name="firebase_problem">Problem with the firebase</string>
+    <string name="firebase_createUser">Create a new user in firebase</string>
 </resources>

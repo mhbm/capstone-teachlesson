@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'udacity'
             keyPassword 'password'
-            storeFile file('/home/lsitec101.macedo/Projetos/Udacity/Capstone/TeachLesson/keystore.jks')
+            storeFile file("$rootDir/keystore.jks")
             storePassword 'password'
         }
     }
