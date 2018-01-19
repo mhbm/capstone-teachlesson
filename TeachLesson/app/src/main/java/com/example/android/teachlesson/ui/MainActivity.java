@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (!dataSnapshot.exists()) {
-                        System.out.println("not exist user in firebase");
                         mDatabase.child("users").child(uidUser).child("name").setValue(nameUser);
                         mDatabase.child("users").child(uidUser).child("email").setValue(emailUser);
                         mDatabase.child("users").child(uidUser).child("photo").setValue(photoUriUser.toString());

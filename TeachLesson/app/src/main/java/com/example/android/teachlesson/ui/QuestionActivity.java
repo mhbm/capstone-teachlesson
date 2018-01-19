@@ -83,8 +83,6 @@ public class QuestionActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 //        mDatabase.keepSynced(true);
 
-        System.out.println(mDatabase.toString());
-
         questionQuiz = new ArrayList<>();
 
         getInformationFirebase(material);
