@@ -83,7 +83,8 @@ public class FinishActivity extends AppCompatActivity {
             uidUser = userFirebase.getUid();
             photoUriUser = userFirebase.getPhotoUrl();
             userName = userFirebase.getDisplayName();
-            Timber.d("Get user information");
+
+            Timber.d(getString(R.string.getUserInformation));
         }
 
         updateUI();
@@ -94,7 +95,7 @@ public class FinishActivity extends AppCompatActivity {
         mTvPontuationText.setText(R.string.finisH_pontuation);
         mTvUserPontuation.setText(String.valueOf(userPontuation));
         Picasso.with(getBaseContext()).load(photoUriUser.toString()).into(mImagePhotoUser);
-        Timber.d("Update the Finish UI");
+        Timber.d(getString(R.string.updateUI));
     }
 
 
@@ -111,14 +112,13 @@ public class FinishActivity extends AppCompatActivity {
 
         /* Send that text to our method that will share it. */
         shareText(pontuation);
-
-        Timber.d("Pontuation was shared");
+        Timber.d(getString(R.string.pontuationShared));
     }
 
 
     private void shareText(String textToShare) {
 
-        String mimeType = "text/plain";
+        String mimeType = getString(R.string.mimeType);
 
         String title = getString(R.string.titleSharePontuation);
 
@@ -146,14 +146,16 @@ public class FinishActivity extends AppCompatActivity {
      */
     public void onClickSavePontuation(View v) {
 
-        mDatabase.child("users").child(uidUser).addListenerForSingleValueEvent(new ValueEventListener() {
+        final String users = getString(R.string.users);
+
+        mDatabase.child(users).child(uidUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     switch (material) {
                         case MATHEMATICS:
                             if (Integer.parseInt(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue())) < userPontuation) {
-                                mDatabase.child("users").child(uidUser).child(PONTUATION_MATHEMATICS).setValue(String.valueOf(userPontuation));
+                                mDatabase.child(users).child(uidUser).child(PONTUATION_MATHEMATICS).setValue(String.valueOf(userPontuation));
                                 putPontuationIntoWidget(String.valueOf(userPontuation), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
                             } else {
                                 putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
@@ -161,7 +163,7 @@ public class FinishActivity extends AppCompatActivity {
                             break;
                         case HISTORY:
                             if (Integer.parseInt(String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue())) < userPontuation) {
-                                mDatabase.child("users").child(uidUser).child(PONTUATION_HISTORY).setValue(String.valueOf(userPontuation));
+                                mDatabase.child(users).child(uidUser).child(PONTUATION_HISTORY).setValue(String.valueOf(userPontuation));
                                 putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(userPontuation), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
                             } else {
                                 putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
@@ -169,14 +171,13 @@ public class FinishActivity extends AppCompatActivity {
                             break;
                         case GEOGRAPH:
                             if (Integer.parseInt(String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue())) < userPontuation) {
-                                mDatabase.child("users").child(uidUser).child(PONTUATION_GEOGRAPH).setValue(String.valueOf(userPontuation));
+                                mDatabase.child(users).child(uidUser).child(PONTUATION_GEOGRAPH).setValue(String.valueOf(userPontuation));
                                 putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(userPontuation), userName);
                             } else {
                                 putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
                             }
                             break;
                     }
-//                    putPontuationIntoWidget(String.valueOf(dataSnapshot.child(PONTUATION_MATHEMATICS).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_HISTORY).getValue()), String.valueOf(dataSnapshot.child(PONTUATION_GEOGRAPH).getValue()), userName);
                 }
             }
 
@@ -192,7 +193,8 @@ public class FinishActivity extends AppCompatActivity {
 
         ArrayList<String> pontuationListString = new ArrayList<>();
 
-        pontuationListString.add("YOUR PONTUATION \n\n" + userName + "\n\n");
+
+        pontuationListString.add(getString(R.string.yourPontuation) + "\n\n" + userName + "\n\n");
 
 
         pontuationListString.add(PONTUATION_MATHEMATICS + " " + mathPontuation + "\n");
@@ -201,7 +203,8 @@ public class FinishActivity extends AppCompatActivity {
 
         UpdateServiceWidget.startWidgetService(pontuationListString, getBaseContext());
 
-        Timber.d("Pontuation was insered into Widget");
+
+        Timber.d(getString(R.string.pontuationWidget));
     }
 
 

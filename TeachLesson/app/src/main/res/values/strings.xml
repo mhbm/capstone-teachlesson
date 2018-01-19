@@ -22,4 +22,11 @@
     <string name="numberQuestion">NUMBER_QUESTION</string>
     <string name="question_quiz">QUESTION_QUIZ</string>
     <string name="nChildren">no of children:</string>
+    <string name="getUserInformation">Get user information</string>
+    <string name="updateUI">Update UI</string>
+    <string name="pontuationShared">Pontuation was shared</string>
+    <string name="pontuationWidget">Pontuation was insered into Widget</string>
+    <string name="yourPontuation">YOUR PONTUATION</string>
+    <string name="mimeType">text/plain</string>
+    <string name="users">users</string>
 </resources>
