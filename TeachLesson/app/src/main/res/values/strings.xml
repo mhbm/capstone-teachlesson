@@ -13,4 +13,9 @@
     <string name="titleSharePontuation">Pontuation of TeachLesson®</string>
     <string name="share_it">SHARE IT</string>
     <string name="save">SAVE</string>
+    <string name="onauthstatechange_signedIn">onAuthStateChanged:signed_in:</string>
+    <string name="onauthstatechange_signedOut">onAuthStateChanged:signed_out</string>
+    <string name="firebaseAuthWithGoogle">firebaseAuthWithGoogle:</string>
+    <string name="signInWithCredential">signInWithCredential</string>
+    <string name="auth_failed">Authentication failed.</string>
 </resources>

@@ -34,8 +34,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private static final String TAG = "SignInActivity";
-
+    private static final String TAG = SignInActivity.class.getName();
 
     private static final int RC_SIGN_IN = 0;
     public GoogleApiClient mGoogleApiClient;
@@ -56,7 +55,8 @@ public class SignInActivity extends AppCompatActivity {
         returnButton = (Button) findViewById(R.id.return_button);
         mTvReturnMessage = (TextView) findViewById(R.id.tv_sign);
 
-        test = getIntent().getBooleanExtra("signOut", false);
+    
+        test = getIntent().getBooleanExtra(String.valueOf(R.string.sign_out), false);
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -88,7 +88,8 @@ public class SignInActivity extends AppCompatActivity {
 
                 if (user != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    Log.d(TAG, R.string.onauthstatechange_signedIn + user.getUid());
 
                     if (test == false) {
                         Intent in = new Intent(getApplicationContext(), MainActivity.class);
@@ -102,7 +103,8 @@ public class SignInActivity extends AppCompatActivity {
                     signOutButton.setVisibility(View.GONE);
                     returnButton.setVisibility(View.GONE);
                     mTvReturnMessage.setText(R.string.welcome);
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
+
+                    Log.d(TAG, String.valueOf(R.string.onauthstatechange_signedOut));
                 }
                 // ...
             }
@@ -131,9 +133,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
 
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
@@ -186,26 +186,27 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        Log.d(TAG, R.string.firebaseAuthWithGoogle + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                        String signInWithCredential = getString(R.string.signInWithCredential);
+                        Log.d(TAG, signInWithCredential + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(SignInActivity.this, "Authentication failed.",
+                            Log.w(TAG, signInWithCredential, task.getException());
+
+                            Toast.makeText(SignInActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-
-
 }
