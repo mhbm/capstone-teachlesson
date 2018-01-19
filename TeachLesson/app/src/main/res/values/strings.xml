@@ -18,4 +18,8 @@
     <string name="firebaseAuthWithGoogle">firebaseAuthWithGoogle:</string>
     <string name="signInWithCredential">signInWithCredential</string>
     <string name="auth_failed">Authentication failed.</string>
+    <string name="userPontuation">USER_PONTUATION</string>
+    <string name="numberQuestion">NUMBER_QUESTION</string>
+    <string name="question_quiz">QUESTION_QUIZ</string>
+    <string name="nChildren">no of children:</string>
 </resources>

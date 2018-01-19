@@ -32,16 +32,15 @@ import static com.example.android.teachlesson.ui.MainActivity.MATERIAL;
 public class QuestionActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
-    public static final String USER_PONTUATION = "USER_PONTUATION";
-    private static final String NUMBER_QUESTION = "NUMBER_QUESTION";
-    private static final String QUESTION_QUIZ =  "QUESTION_QUIZ";
+
+    public static final String USER_PONTUATION = String.valueOf(R.string.userPontuation);;
+    private static final String NUMBER_QUESTION = String.valueOf(R.string.numberQuestion);
+    private static final String QUESTION_QUIZ = String.valueOf(R.string.question_quiz);
 
 
     private AdView mAdView;
 
     private DatabaseReference mDatabase;
-    private DatabaseReference mQuestionReference;
-
 
     @BindView(R.id.btn_answer1) Button mBtnAnswer1;
     @BindView(R.id.btn_answer2) Button mBtnAnswer2;
@@ -58,6 +57,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         mAdView = (AdView) findViewById(R.id.adView_question);
@@ -67,7 +67,6 @@ public class QuestionActivity extends AppCompatActivity {
         ///GET THE MATERIAL CHOOSE
         Bundle bundle = getIntent().getExtras();
         material = bundle.getString(MATERIAL);
-
 
         ButterKnife.bind(this);
 
@@ -113,7 +112,7 @@ public class QuestionActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot questionDataSnapshot : dataSnapshot.getChildren()) {
                             long value = questionDataSnapshot.getChildrenCount();
-                            Log.d(TAG, "no of children: " + value);
+                            Log.d(TAG, String.valueOf(R.string.nChildren + value));
                             QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
                             questionQuiz.add(questionModel);
                         }
@@ -132,11 +131,9 @@ public class QuestionActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot questionDataSnapshot : dataSnapshot.getChildren()) {
                             long value = questionDataSnapshot.getChildrenCount();
-                            Log.d(TAG, "no of children: " + value);
+                            Log.d(TAG, String.valueOf(R.string.nChildren + value));
                             QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
-//                            System.out.println(questionModel.getQuestion());
                             questionQuiz.add(questionModel);
-                            System.out.println(questionQuiz.get(0).getPontuation());
                         }
                         updateUI();
                     }
@@ -153,12 +150,10 @@ public class QuestionActivity extends AppCompatActivity {
                         int i = 0;
                         for (DataSnapshot questionDataSnapshot : dataSnapshot.getChildren()) {
                             long value = questionDataSnapshot.getChildrenCount();
-                            Log.d(TAG, "no of children: " + value);
+                            Log.d(TAG, String.valueOf(R.string.nChildren + value));
                             QuestionModel questionModel = questionDataSnapshot.getValue(QuestionModel.class);
                             questionQuiz.add(questionModel);
 
-//                            System.out.println(questionQuiz.get(i).getQuestion());
-//                            i++;
                         }
                         updateUI();
                     }
@@ -198,9 +193,7 @@ public class QuestionActivity extends AppCompatActivity {
     public void answerTheQuestion(Button buttonClicked) {
         if (buttonClicked.getText().equals(questionQuiz.get(numberQuestion).getCorrect())) {
             userPontuation += Integer.valueOf(questionQuiz.get(numberQuestion).getPontuation());
-            System.out.println("pontuaaaaaaaaaaation  " + userPontuation  + "         " +questionQuiz.size());
             if (numberQuestion == questionQuiz.size() -1) {
-//                System.out.println("FINISH your pontuation " + userPontuation);
                 endGame();
             } else {
                 numberQuestion++;
@@ -215,7 +208,6 @@ public class QuestionActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FinishActivity.class);
         intent.putExtra(USER_PONTUATION, userPontuation);
         intent.putExtra(MATERIAL, material);
-        System.out.println("END GAME = PONTUATION " + userPontuation);
         startActivity(intent);
     }
 

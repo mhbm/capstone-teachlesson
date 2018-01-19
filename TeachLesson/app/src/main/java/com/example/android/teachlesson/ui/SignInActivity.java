@@ -55,7 +55,7 @@ public class SignInActivity extends AppCompatActivity {
         returnButton = (Button) findViewById(R.id.return_button);
         mTvReturnMessage = (TextView) findViewById(R.id.tv_sign);
 
-    
+
         test = getIntent().getBooleanExtra(String.valueOf(R.string.sign_out), false);
 
 
