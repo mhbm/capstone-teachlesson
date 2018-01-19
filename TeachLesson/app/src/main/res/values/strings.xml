@@ -11,4 +11,6 @@
     <string name="text_logout">Do you really want to quit the TechLesson® app?</string>
     <string name="finisH_pontuation">My pontuation in the TeachLesson® was</string>
     <string name="titleSharePontuation">Pontuation of TeachLesson®</string>
+    <string name="share_it">SHARE IT</string>
+    <string name="save">SAVE</string>
 </resources>
