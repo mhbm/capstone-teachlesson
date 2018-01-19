@@ -33,6 +33,8 @@ public class QuestionActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
     public static final String USER_PONTUATION = "USER_PONTUATION";
+    private static final String NUMBER_QUESTION = "NUMBER_QUESTION";
+    private static final String QUESTION_QUIZ =  "QUESTION_QUIZ";
 
 
     private AdView mAdView;
@@ -88,9 +90,17 @@ public class QuestionActivity extends AppCompatActivity {
 
         getInformationFirebase(material);
 
-        //// initialze variable aux
-        userPontuation =  0;
-        numberQuestion = 0;
+
+        if (savedInstanceState != null) {
+           userPontuation = savedInstanceState.getInt(USER_PONTUATION);
+            numberQuestion = savedInstanceState.getInt(NUMBER_QUESTION);
+            questionQuiz = savedInstanceState.getParcelableArrayList(QUESTION_QUIZ);
+            updateUI();
+        } else {
+            //// initialze variable aux
+            userPontuation = 0;
+            numberQuestion = 0;
+        }
     }
 
 
@@ -209,4 +219,11 @@ public class QuestionActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(USER_PONTUATION, userPontuation);
+        outState.putInt(NUMBER_QUESTION, numberQuestion);
+        outState.putParcelableArrayList(QUESTION_QUIZ, questionQuiz);
+    }
 }
